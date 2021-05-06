@@ -8,14 +8,16 @@ import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ArrayAdapter
-import android.widget.ImageButton
-import android.widget.Spinner
-import android.widget.TextView
+import android.widget.*
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.tugraz.asd.modernnewsgroupapp.databinding.FragmentShowSubgroupsBinding
+import com.tugraz.asd.modernnewsgroupapp.helper.EditNewsgroupButton
+import com.tugraz.asd.modernnewsgroupapp.helper.NewsgroupSwipeHelper
+import com.tugraz.asd.modernnewsgroupapp.listener.NewsgroupButtonClickListener
 import com.tugraz.asd.modernnewsgroupapp.vo.NewsgroupServer
 
 /**
@@ -26,6 +28,8 @@ class FragmentShowSubgroups : Fragment() {
     private lateinit var viewModel: ServerObservable
     private lateinit var ngs: NewsgroupController
     private lateinit var binding: FragmentShowSubgroupsBinding
+
+    lateinit var layoutManager:LinearLayoutManager
 
     @SuppressLint("UseCompatLoadingForDrawables")
     override fun onCreateView(
@@ -50,6 +54,30 @@ class FragmentShowSubgroups : Fragment() {
         val subscribed_newsgroups = newsgroupServer_?.newsGroups?.filter { newsgroup -> newsgroup.subscribed == true}
         val scale = getResources().getDisplayMetrics().density;
 
+        binding.recycleViewSubgroups.setHasFixedSize(true)
+        layoutManager = LinearLayoutManager(activity)
+        binding.recycleViewSubgroups.layoutManager= layoutManager
+
+        val swipe = object: NewsgroupSwipeHelper(activity, binding.recycleViewSubgroups, 200)
+        {
+            override fun instantiateEditNewsgroupButton(
+                viewHolder: RecyclerView.ViewHolder,
+                buffer: MutableList<EditNewsgroupButton>
+            ) {
+                buffer.add(EditNewsgroupButton(activity!!,
+                    "Edit",
+                    30,
+                    R.drawable.ic_baseline_edit_white_24,
+                    Color.parseColor("#a8a8a8"),
+                    object:NewsgroupButtonClickListener{
+                        override fun onClick(pos: Int) {
+                            Toast.makeText(activity, "EDIT ID $pos", Toast.LENGTH_SHORT).show()
+                        }
+                    }
+                ))
+            }
+        }
+
         if (subscribed_newsgroups != null) {
             for(ng in subscribed_newsgroups) {
                 val textview = TextView(activity)
@@ -64,7 +92,8 @@ class FragmentShowSubgroups : Fragment() {
                 textview.textSize = 20f
                 textview.setTypeface(Typeface.DEFAULT_BOLD)
 
-                binding.viewShowSubgroups.addView(textview)
+
+                binding.recycleViewSubgroups.addView(textview)
             }
 
             binding.buttonAddSubgroups.setOnClickListener() {
