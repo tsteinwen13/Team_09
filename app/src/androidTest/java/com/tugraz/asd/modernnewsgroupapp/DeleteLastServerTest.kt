@@ -84,22 +84,19 @@ class DeleteLastServerTest {
         )
         materialButton.perform(click())
 
-        val checkBox = onView(
+        val materialCheckBox = onView(
             allOf(
-                withText("vc-graz"),
+                withId(R.id.checkBox), withText("vc-graz"),
                 childAtPosition(
-                    allOf(
+                    childAtPosition(
                         withId(R.id.view_subscribe),
-                        childAtPosition(
-                            withId(R.id.scrollView2),
-                            0
-                        )
+                        0
                     ),
                     0
                 )
             )
         )
-        checkBox.perform(scrollTo(), click())
+        materialCheckBox.perform(scrollTo(), click())
 
         val materialButton2 = onView(
             allOf(

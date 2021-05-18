@@ -159,19 +159,16 @@ class MainActivityTest {
         )
         materialButton.perform(click())
 
-        val button2 = onView(
-                allOf(
-                        withId(R.id.button_finish), withText("FINISH"),
-                        withParent(
-                                allOf(
-                                        withId(R.id.linearLayout4),
-                                        withParent(withId(R.id.linearLayout2))
-                                )
-                        ),
-                        isDisplayed()
-                )
-        )
-        button2.check(ViewAssertions.matches(isDisplayed()))
+        val materialButton2 = onView(
+            allOf(withId(R.id.button_finish), withText("FINISH"),
+                childAtPosition(
+                    allOf(withId(R.id.linearLayout4),
+                        childAtPosition(
+                            withId(R.id.linearLayout2),
+                            2)),
+                    1),
+                isDisplayed()))
+        materialButton2.perform(click())
     }
 
     private fun childAtPosition(

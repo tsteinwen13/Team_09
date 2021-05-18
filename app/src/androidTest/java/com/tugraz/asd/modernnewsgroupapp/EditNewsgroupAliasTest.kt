@@ -14,6 +14,7 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
 import org.hamcrest.Matcher
 import org.hamcrest.Matchers.*
+import org.junit.After
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -31,6 +32,7 @@ class EditNewsgroupAliasTest {
     var  rule: ActivityScenarioRule<MainActivity> = ActivityScenarioRule<MainActivity>(MainActivity::class.java)
 
     private fun init() {
+        Thread.sleep(5000)
         val inputName = onView(withId(R.id.editText_name)).check(matches(isDisplayed()))
         val inputEmail = onView(withId(R.id.editText_email)).check(matches(isDisplayed()))
 
@@ -53,6 +55,7 @@ class EditNewsgroupAliasTest {
     fun clearDb(){
         InstrumentationRegistry.getInstrumentation().getTargetContext().deleteDatabase("newsgroup.db")
     }
+
 
     @Test
     fun checkIfNewsgroupServerDisplayed()

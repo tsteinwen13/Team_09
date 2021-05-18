@@ -68,15 +68,20 @@ class NewsgroupServerMenuTest {
                         isDisplayed()))
         materialButton.perform(click())
 
-        val checkBox = onView(
-                allOf(withText("tu-graz.algorithmen"),
-                        childAtPosition(
-                                allOf(withId(R.id.view_subscribe),
-                                        childAtPosition(
-                                                withId(R.id.scrollView2),
-                                                0)),
-                                0)))
-        checkBox.perform(scrollTo(), click())
+        val materialCheckBox = onView(
+            allOf(
+                withId(R.id.checkBox), withText("vc-graz"),
+                childAtPosition(
+                    childAtPosition(
+                        withId(R.id.view_subscribe),
+                        0
+                    ),
+                    0
+                )
+            )
+        )
+        materialCheckBox.perform(scrollTo(), click())
+
 
         val materialButton2 = onView(
                 allOf(withId(R.id.button_finish), withText("FINISH"),

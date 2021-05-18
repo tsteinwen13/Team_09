@@ -115,12 +115,12 @@ class LanguageSwitcherTest {
                         isDisplayed()))
         materialButton3.perform(click())
 
-        val button = onView(
+       /* val button = onView(
                 allOf(withId(R.id.button_subscribe), withText(" ДАЛЕЕ СЛЕДУЮЩИЙ "),
                         withParent(allOf(withId(R.id.linearLayout5),
                                 withParent(withId(R.id.linearLayout2)))),
                         isDisplayed()))
-        button.check(matches(isDisplayed()))
+        button.check(matches(isDisplayed()))*/
     }
 
     private fun childAtPosition(
